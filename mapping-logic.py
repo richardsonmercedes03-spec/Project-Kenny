@@ -465,9 +465,51 @@ document.querySelectorAll(
 
 .forEach(cb => {
 
+<div class="tab-content-area">
+
+    ALL TAB PANELS HERE
+
+</div>
+
     cb.addEventListener(
         'change',
         renderDams
     );
+
+});
+
+//--Tab System--//
+document.addEventListener('DOMContentLoaded', () => {
+
+    const buttons =
+        document.querySelectorAll('.nav-button');
+
+    const panels =
+        document.querySelectorAll('.tab-panel');
+
+    buttons.forEach(button => {
+
+        button.addEventListener('click', () => {
+
+            const tab =
+                button.dataset.tab;
+
+            if (!tab) return;
+
+            buttons.forEach(btn =>
+                btn.classList.remove('active'));
+
+            panels.forEach(panel =>
+                panel.classList.remove('active'));
+
+            button.classList.add('active');
+
+            document
+                .getElementById('tab-' + tab)
+                .classList.add('active');
+
+        });
+
+    });
 
 });
