@@ -137,6 +137,105 @@ body { margin: 0; font-family: Arial; }
 </head>
 
 <body>
+
+<!-- HEADER -->
+<header class="header-container">
+
+    <!-- LEFT -->
+    <div class="header-left">
+
+        <div class="logo-group">
+
+            <img
+                src="images/logo1.png"
+                alt="Agency Logo"
+                class="header-logo">
+
+            <img
+                src="images/logo2.png"
+                alt="Partner Logo"
+                class="header-logo">
+
+        </div>
+
+    </div>
+
+    <!-- CENTER -->
+    <div class="header-center">
+
+        <h1>Low-Head Dam Inventory Live Forecasts</h1>
+
+        <div class="header-subtitle">
+            Real-time hazard forecasts using NOAA National Water Model data
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="header-right">
+
+        <div id="liveClock"></div>
+
+    </div>
+
+</header>
+
+<!-- NOAA LEGEND -->
+<div class="legend-panel">
+
+    <h4>Forecast Severity</h4>
+
+    <div>
+        <span class="legend-color low"></span>
+        Low Hazard
+    </div>
+
+    <div>
+        <span class="legend-color significant"></span>
+        Significant Hazard
+    </div>
+
+    <div>
+        <span class="legend-color high"></span>
+        High Hazard
+    </div>
+
+</div>
+    
+<!-- NAVIGATION -->
+<nav class="nav-bar">
+
+<!-- SEARCH BAR -->
+<div class="search-container">
+
+    <input
+        type="text"
+        id="damSearch"
+        placeholder="Search dam name, river, or county...">
+
+    <button id="searchButton">
+        Search
+    </button>
+
+</div>
+    
+    <button class="nav-button active">
+        Forecasts
+    </button>
+
+    <button class="nav-button">
+        About
+    </button>
+
+    <button class="nav-button">
+        Data Sources
+    </button>
+
+    <button class="nav-button">
+        Contact
+    </button>
+
+</nav>
 <!-- Disclaimer -->
 <div id="disclaimer-overlay" class="disclaimer-overlay">
 
@@ -170,7 +269,28 @@ body { margin: 0; font-family: Arial; }
 </div>
 
 <div id="map"></div>
+    
+<!--Refresh update 5min-->
+<script>
+function updateRefreshTime() {
 
+    const now = new Date();
+
+    document.getElementById('refreshStatus')
+        .textContent =
+        'Last updated: ' +
+        now.toLocaleTimeString();
+}
+
+updateRefreshTime();
+setInterval(updateRefreshTime, 300000);
+</script>
+
+<!--STATUS BADGE-->    
+<span class="status-badge status-high">
+    HIGH HAZARD
+</span>
+    
 <!-- Forecast Modal -->
 <div id="forecastModal" class="modal">
 
@@ -209,36 +329,7 @@ body { margin: 0; font-family: Arial; }
 </div>
 
 <script>
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    const overlay =
-        document.getElementById('disclaimer-overlay');
-
-    const agreeBtn =
-        document.getElementById('disclaimer-agree');
-
-    // Hide if already accepted this session
-    if (sessionStorage.getItem('disclaimerAccepted')) {
-
-        overlay.style.display = 'none';
-    }
-
-    // Accept disclaimer
-    agreeBtn.addEventListener('click', function () {
-
-        sessionStorage.setItem(
-            'disclaimerAccepted',
-            'true'
-        );
-
-        overlay.style.display = 'none';
-    });
-
-});
-
-</script>
-
+    
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -248,14 +339,77 @@ document.addEventListener('DOMContentLoaded', function () {
     const agreeBtn =
         document.getElementById('disclaimer-agree');
 
+    // Hide if already accepted
+    if (localStorage.getItem('disclaimerAccepted')) {
+        overlay.style.display = 'none';
+    }
+
+    // Accept disclaimer
     agreeBtn.addEventListener('click', function () {
+
+        localStorage.setItem(
+            'disclaimerAccepted',
+            'true'
+        );
 
         overlay.style.display = 'none';
     });
 
 });
 </script>
+</script>
 
+<!--LIVE CLOCK-->
+    <script>
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById('liveClock').textContent =
+        now.toLocaleString();
+}
+
+updateClock();
+
+setInterval(updateClock, 1000);
+</script>
+
+<div id="refreshStatus">
+    Updating forecasts...
+</div>
+    
+<script>
+document.getElementById('searchButton')
+.addEventListener('click', function () {
+
+    const searchValue =
+        document.getElementById('damSearch')
+        .value
+        .toLowerCase();
+
+    // Example:
+    // assumes allMarkers exists in mapping-logic.js
+
+    allMarkers.eachLayer(function(layer) {
+
+        const name =
+            (layer.feature?.properties?.name || '')
+            .toLowerCase();
+
+        if (name.includes(searchValue)) {
+
+            map.setView(
+                layer.getLatLng(),
+                13
+            );
+
+            layer.openPopup();
+        }
+    });
+
+});
+</script>
+    
 <!-- YOUR LOGIC FILE (ONLY USE ONCE) -->
 <script src="mapping-logic.js"></script>
 
