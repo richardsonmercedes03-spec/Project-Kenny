@@ -236,6 +236,54 @@ body { margin: 0; font-family: Arial; }
     </button>
 
 </nav>
+
+<!-- SIDEBAR ANALYTICS -->
+<div id="analyticsSidebar" class="analytics-sidebar">
+
+    <div class="sidebar-header">
+
+        <h2>Dam Analytics</h2>
+
+        <button id="closeSidebar">
+            ×
+        </button>
+
+    </div>
+
+    <div class="sidebar-content">
+
+        <div id="selectedDamName">
+            Select a dam marker
+        </div>
+
+        <div class="analytics-section">
+
+            <h3>Forecast Status</h3>
+
+            <div id="forecastStatusBadge"></div>
+
+        </div>
+
+        <div class="analytics-section">
+
+            <h3>NOAA Hydrograph</h3>
+
+            <canvas id="hydrographChart"></canvas>
+
+        </div>
+
+        <div class="analytics-section">
+
+            <h3>Dam Information</h3>
+
+            <div id="damInfo"></div>
+
+        </div>
+
+    </div>
+
+</div>
+    
 <!-- Disclaimer -->
 <div id="disclaimer-overlay" class="disclaimer-overlay">
 
@@ -359,6 +407,61 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 </script>
 
+<!-- WATERSHED FILTER -->
+<div class="watershed-panel">
+
+    <h4>Watershed Filter</h4>
+
+    <select id="watershedSelect">
+
+        <option value="all">
+            All Watersheds
+        </option>
+
+        <option value="Colorado">
+            Colorado Basin
+        </option>
+
+        <option value="South Platte">
+            South Platte
+        </option>
+
+        <option value="Arkansas">
+            Arkansas Basin
+        </option>
+
+    </select>
+
+</div>
+
+<!-- LAYER TOGGLES -->
+<div class="layer-panel">
+
+    <h4>Map Layers</h4>
+
+    <label>
+        <input type="checkbox"
+               id="toggleDams"
+               checked>
+        Dam Markers
+    </label>
+
+    <label>
+        <input type="checkbox"
+               id="toggleStreams"
+               checked>
+        NHD Streams
+    </label>
+
+    <label>
+        <input type="checkbox"
+               id="toggleWatersheds"
+               checked>
+        Watersheds
+    </label>
+
+</div>
+    
 <!--LIVE CLOCK-->
     <script>
 function updateClock() {
