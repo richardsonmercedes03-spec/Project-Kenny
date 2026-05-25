@@ -19,7 +19,9 @@ map.addLayer(nwmCluster);
 //-- 3. Globals --//
 
 let allDamFeatures = [];
-
+let allMarkers = [];
+let watershedLayer = L.layerGroup();
+let selectedDam = null;
 
 //-- 4. Styling --//
 
@@ -255,7 +257,7 @@ async function loadForecastForDam(feature) {
 function renderDams() {
 
     damCluster.clearLayers();
-
+    allMarkers = [];
     const selected = getSelectedHazards();
 
     allDamFeatures.forEach(feature => {
@@ -281,6 +283,8 @@ function renderDams() {
             }
         );
 
+        marker.featureData = feature;
+
         marker.bindTooltip(
             feature.properties.name ||
             feature.properties.Name ||
@@ -289,14 +293,83 @@ function renderDams() {
 
         marker.on('click', () => {
 
+            selectedDam = feature;
+
             loadForecastForDam(feature);
+
+            openAnalyticsSidebar(feature);
 
         });
 
         damCluster.addLayer(marker);
+        allMarkers.push(marker);
     });
 }
 
+//-- Sidebar Analytics --//
+
+function openAnalyticsSidebar(feature) {
+
+    const props = feature.properties;
+
+    const sidebar =
+        document.getElementById(
+            'analyticsSidebar'
+        );
+
+    sidebar.classList.add('open');
+
+    document.getElementById(
+        'selectedDamName'
+    ).textContent =
+        props.name || 'Unnamed Dam';
+
+    //-- Status Badge --//
+
+    const hazard =
+        props.hazard || 'Unknown';
+
+    let badgeClass =
+        'status-low';
+
+    if (hazard === 'High') {
+        badgeClass = 'status-high';
+    }
+
+    else if (hazard === 'Significant') {
+        badgeClass = 'status-significant';
+    }
+
+    document.getElementById(
+        'forecastStatusBadge'
+    ).innerHTML = `
+        <span class="
+            status-badge
+            ${badgeClass}
+        ">
+            ${hazard.toUpperCase()}
+        </span>
+    `;
+
+    //-- Dam Info --//
+
+    document.getElementById(
+        'damInfo'
+    ).innerHTML = `
+
+        <strong>River:</strong>
+        ${props.river || 'N/A'}<br>
+
+        <strong>County:</strong>
+        ${props.county || 'N/A'}<br>
+
+        <strong>Watershed:</strong>
+        ${props.watershed || 'N/A'}<br>
+
+        <strong>COMID:</strong>
+        ${props.COMID || props.comid || 'N/A'}
+    `;
+}
 
 //-- 8. Load GeoPackage --//
 
@@ -452,6 +525,47 @@ function loadNWM() {
 
 //-- Initial Load --//
 
+//-- Dam Search --//
+
+document.getElementById(
+    'searchButton'
+)
+
+.addEventListener('click', function () {
+
+    const query =
+        document.getElementById(
+            'damSearch'
+        )
+        .value
+        .toLowerCase();
+
+    allMarkers.forEach(marker => {
+
+        const tooltip =
+            marker.getTooltip();
+
+        if (!tooltip) return;
+
+        const name =
+            tooltip.getContent()
+            .toLowerCase();
+
+        if (name.includes(query)) {
+
+            map.setView(
+                marker.getLatLng(),
+                12
+            );
+
+            marker.openTooltip();
+
+        }
+
+    });
+
+});
+
 loadNWM();
 
 setInterval(loadNWM, 600000);
@@ -465,16 +579,45 @@ document.querySelectorAll(
 
 .forEach(cb => {
 
-<div class="tab-content-area">
-
-    ALL TAB PANELS HERE
-
-</div>
-
     cb.addEventListener(
         'change',
         renderDams
     );
+
+});
+
+//-- Watershed Filter --//
+
+document.getElementById(
+    'watershedSelect'
+)
+
+.addEventListener('change', function(e) {
+
+    const selected =
+        e.target.value;
+
+    damCluster.clearLayers();
+
+    allMarkers.forEach(marker => {
+
+        const feature =
+            marker.featureData;
+
+        if (!feature) return;
+
+        const watershed =
+            feature.properties.watershed;
+
+        if (
+            selected === 'all' ||
+            watershed === selected
+        ) {
+
+            damCluster.addLayer(marker);
+        }
+
+    });
 
 });
 
