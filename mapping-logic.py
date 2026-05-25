@@ -458,7 +458,12 @@ function loadNWM() {
     .then(r => r.json())
 
     .then(data => {
-
+        
+        document.getElementById(
+            'refreshStatus'
+        ).textContent =
+            'Last updated: ' +
+            new Date().toLocaleTimeString();
         console.log(data);
 
         nwmCluster.clearLayers();
@@ -586,6 +591,48 @@ document.querySelectorAll(
 
 });
 
+//-- Geolocation --//
+
+document.getElementById(
+    'geoLocateBtn'
+)
+
+.addEventListener('click', function () {
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+
+            map.setView([
+                position.coords.latitude,
+                position.coords.longitude
+            ], 11);
+
+            L.circleMarker(
+                [
+                    position.coords.latitude,
+                    position.coords.longitude
+                ],
+                {
+                    radius: 8,
+                    fillColor: 'blue',
+                    color: '#fff',
+                    fillOpacity: 1
+                }
+            )
+
+            .addTo(map)
+
+            .bindPopup(
+                'Your Location'
+            )
+
+            .openPopup();
+
+        }
+    );
+
+});
+
 //-- Watershed Filter --//
 
 document.getElementById(
@@ -618,6 +665,43 @@ document.getElementById(
         }
 
     });
+
+});
+
+//-- Layer Toggles --//
+
+document.getElementById(
+    'toggleDams'
+)
+
+.addEventListener('change', function(e) {
+
+    if (e.target.checked) {
+
+        map.addLayer(damCluster);
+
+    } else {
+
+        map.removeLayer(damCluster);
+    }
+
+});
+
+
+document.getElementById(
+    'toggleStreams'
+)
+
+.addEventListener('change', function(e) {
+
+    if (e.target.checked) {
+
+        map.addLayer(nwmCluster);
+
+    } else {
+
+        map.removeLayer(nwmCluster);
+    }
 
 });
 
