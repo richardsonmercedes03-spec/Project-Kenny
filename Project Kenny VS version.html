@@ -434,6 +434,120 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </div>
 
+<script>
+document.getElementById('watershedSelect')
+.addEventListener('change', function(e) {
+
+    const watershed =
+        e.target.value;
+
+    allMarkers.eachLayer(function(layer) {
+
+        const damWatershed =
+            layer.feature?.properties?.watershed;
+
+        if (
+            watershed === 'all' ||
+            damWatershed === watershed
+        ) {
+
+            layer.addTo(map);
+
+        } else {
+
+            map.removeLayer(layer);
+        }
+    });
+});
+</script>
+    
+    <!--LAYER TOGGLES-->
+<script>
+document.getElementById('toggleDams')
+.addEventListener('change', function(e) {
+
+    if (e.target.checked) {
+
+        map.addLayer(allMarkers);
+
+    } else {
+
+        map.removeLayer(allMarkers);
+    }
+});
+</script>
+    
+    <!--NOAA HYDROGRAPH CHART-->
+<script>
+const hydroCtx =
+    document.getElementById('hydrographChart');
+
+const hydrographChart =
+    new Chart(hydroCtx, {
+
+    type: 'line',
+
+    data: {
+        labels: [
+            'Now',
+            '+3h',
+            '+6h',
+            '+9h',
+            '+12h',
+            '+18h',
+            '+24h'
+        ],
+
+        datasets: [{
+            label: 'Forecast Streamflow (cfs)',
+
+            data: [
+                1200,
+                1800,
+                2400,
+                3200,
+                2800,
+                2100,
+                1700
+            ],
+
+            borderWidth: 3,
+            tension: 0.3
+        }]
+    },
+
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+</script>
+    
+<!--GEOLOCATION-->
+<script>
+document.getElementById('geoLocateBtn')
+.addEventListener('click', function () {
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+
+            map.setView([
+                position.coords.latitude,
+                position.coords.longitude
+            ], 12);
+
+            L.marker([
+                position.coords.latitude,
+                position.coords.longitude
+            ])
+            .addTo(map)
+            .bindPopup('Your Location')
+            .openPopup();
+        }
+    );
+});
+</script>
+    
 <!-- LAYER TOGGLES -->
 <div class="layer-panel">
 
@@ -510,6 +624,23 @@ document.getElementById('searchButton')
         }
     });
 
+});
+</script>
+
+    <!--GEOLOCATION BUTTON-->
+<button id="geoLocateBtn" class="geo-btn">
+    ⌖
+</button>
+
+<!--SIDEBAR OPEN/CLOSE-->
+<script>
+const sidebar =
+    document.getElementById('analyticsSidebar');
+
+document.getElementById('closeSidebar')
+.addEventListener('click', function () {
+
+    sidebar.classList.remove('open');
 });
 </script>
     
