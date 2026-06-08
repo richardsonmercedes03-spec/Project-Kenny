@@ -23,6 +23,14 @@ let allMarkers = [];
 let watershedLayer = L.layerGroup();
 let selectedDam = null;
 
+function getDamName(props) {
+
+    return (
+        getDamName(props)
+    );
+
+}
+
 //-- 4. Styling --//
 
 function getHazardColor(h) {
@@ -161,7 +169,7 @@ async function loadForecastForDam(feature) {
         //-- Left Panel --//
 
         statusDisplay.innerHTML = `
-            <h2>${props.name || "Dam"}</h2>
+            <h2>${getDamName(props)}</h2>
 
             <p><strong>COMID:</strong> ${comid}</p>
 
@@ -286,9 +294,7 @@ function renderDams() {
         marker.featureData = feature;
 
         marker.bindTooltip(
-            feature.properties.name ||
-            feature.properties.Name ||
-            "Dam"
+            getDamName(feature.properties)
         );
 
         marker.on('click', () => {
