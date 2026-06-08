@@ -29,7 +29,6 @@ args = parser.parse_args()
 #constants
 _BACKEND_ROOT = Path(__file__).resolve().parent
 _REPO_ROOT = _BACKEND_ROOT.parent
-args = parser.parse_args()
 raw_dem_dir = 
 ## must be defined manually. fetch_nhd_flowlines = 
 
@@ -69,6 +68,22 @@ if len(dams_df) < n_raw:
         print(f"Dropped {n_raw - len(dams_df)} row(s) with missing OBJECTID/lat/lon")
 if args.limit:
         dams_df = dams_df.head(args.limit)
+
+output_csv = (
+    _REPO_ROOT /
+    "frontend" /
+    "data" /
+    "full_lhd_website_with_comids.csv"
+)
+
+dams_df.to_csv(
+    output_csv,
+    index=False
+)
+
+print(
+    f"Saved updated CSV: {output_csv}"
+)
 
 #----------------------------------------
 # For each dam, fetch NHD flowlines (100 m upstream, 1 km downstream)
@@ -115,9 +130,16 @@ for idx, dam_row in dams_df.iterrows():
 
         print(f"Dam {idx} -> COMID {comid}")
 
-        output_path = f"STRM/{dam_row['OBJECTID']}/flowlines.gpkg"
+        output_path = Path(
+            f"STRM/{dam_row['OBJECTID']}/flowlines.gpkg"
+        )
+
+        output_path.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
 
         flowlines.to_file(
-        output_path,
-        driver="GPKG"
+            output_path,
+            driver="GPKG"
         )
