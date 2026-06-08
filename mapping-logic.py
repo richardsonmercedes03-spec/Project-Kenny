@@ -157,9 +157,30 @@ async function loadForecastForDam(feature) {
 
         //-- NOAA Gauge Info --//
 
-        const gaugeResponse = await fetch(
-            `https://api.water.noaa.gov/nwps/v1/gauges/${comid}`
-        );
+        let gaugeData = {};
+
+        try {
+
+            const gaugeResponse =
+                await fetch(
+                    `https://api.water.noaa.gov/nwps/v1/gauges/${comid}`
+                );
+
+            if (gaugeResponse.ok) {
+
+                gaugeData =
+                    await gaugeResponse.json();
+            }
+
+        }
+        catch(err) {
+
+            console.warn(
+                "Gauge lookup failed",
+                err
+            );
+
+        }
 
         const gaugeData = await gaugeResponse.json();
 
