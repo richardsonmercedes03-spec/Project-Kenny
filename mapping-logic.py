@@ -123,11 +123,21 @@ async function loadForecastForDam(feature) {
 
     const props = feature.properties;
 
-    const comid = props.COMID || props.comid;
+    const comid =
+        props.COMID ||
+        props.comid ||
+        props.Comid;
 
     if (!comid) {
 
-        alert("No COMID available");
+        console.error(
+            "Missing COMID:",
+            feature
+        );
+
+        alert(
+            "No COMID available for this dam."
+        );
 
         return;
     }
