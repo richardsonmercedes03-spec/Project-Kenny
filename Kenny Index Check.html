@@ -66,6 +66,12 @@
 
 <nav class="nav-bar">
 
+    <button class="nav-button active"
+            data-tab="forecasts"
+            aria-controls="tab-forecasts">
+        Forecasts
+    </button>
+    
     <button class="nav-button"
             data-tab="education"
             aria-controls="tab-education">
@@ -144,14 +150,57 @@
     </div>
 </div>    
 </div>
+
+<div id="analyticsSidebar" class="analytics-sidebar">
+
+    <div class="sidebar-header">
+
+        <h2>Dam Analytics</h2>
+
+    </div>
+
+    <div class="sidebar-content">
+
+        <div id="selectedDamName">
+            Select a dam marker
+        </div>
+
+        <div class="analytics-section">
+
+            <h3>Forecast Status</h3>
+
+            <div id="forecastStatusBadge"></div>
+
+        </div>
+
+        <div class="analytics-section">
+
+            <h3>Dam Information</h3>
+
+            <div id="damInfo"></div>
+
+        </div>
+
+    </div>
+
+</div>
     
     <div id="forecastModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="document.getElementById('forecastModal').style.display='none'">&times;</span>
-            <div id="statusDisplay"></div>
-            <canvas id="forecastChart"></canvas>
-        </div>
+    <div class="modal-content">
+
+        <span class="close"
+              onclick="document.getElementById('forecastModal').style.display='none'">
+            &times;
+        </span>
+
+        <div id="statusDisplay"></div>
+
+        <canvas id="forecastChart"></canvas>
+
+        <div id="nwmInfo"></div>
+
     </div>
+</div>
    
     <script src="js/mapping-logic.js"></script>
     
