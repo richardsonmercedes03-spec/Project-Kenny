@@ -1,27 +1,10 @@
 #style.css
 
- <style>
+ 
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; background-color: #f4f7f6; overflow: hidden; }
         
         /* UPDATED: Increased padding for a taller header */
         /* HEADER */
-.header-container {
-    height: 150px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 25px;
-
-    background: #1f2937;
-    color: white;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-
-    position: relative;
-    z-index: 1500;
-}
 
 .header-left,
 .header-right {
@@ -59,17 +42,10 @@
     align-items: center;
 }
 
-.header-logo {
-    height: 58px;
-    width: auto;
-}
-
 /* REFRESH STATUS */
 #refreshStatus {
     margin-top: 6px;
-
     font-size: 0.8rem;
-
     color: #93c5fd;
 }
 
@@ -80,35 +56,13 @@
     opacity: 0.9;
 }
 
-/* NAVIGATION */
-.nav-bar {
-    height: 48px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 0 20px;
-
-    background: #374151;
-
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-
-    position: relative;
-    z-index: 1400;
-}
-
 /* STREAMFLOW BADGES */
 .status-badge {
     display: inline-block;
-
     padding: 4px 10px;
-
     border-radius: 999px;
-
     font-size: 0.8rem;
     font-weight: bold;
-
     color: white;
 }
 
@@ -124,63 +78,101 @@
     background: #dc2626;
 }
 
+/*SIDEBAR STYLING*/
+.analytics-sidebar {
+    position: fixed;
+    top: 200px;
+    right: 0;
+    width: 320px;
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.15);
+    z-index: 1200;
+    padding: 15px;
+}
+
+.sidebar-header {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.analytics-section {
+    margin-top: 15px;
+}
+
 /* SEARCH BAR */
 .search-container {
     display: flex;
     gap: 10px;
-
     padding: 12px 20px;
-
     background: #f3f4f6;
-
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-
     position: relative;
     z-index: 1300;
 }
 
-#damSearch {
-    flex-grow: 1;
+.map-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #f3f4f6;
+    border-bottom: 1px solid #d1d5db;
+    align-items: center;
+}
 
-    padding: 10px 14px;
+#geoLocateBtn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #059669;
+    color: white;
+    cursor: pointer;
+}
 
+#geoLocateBtn:hover {
+    background: #047857;
+}
+
+#watershedSelect {
+    padding: 10px;
     border: 1px solid #cbd5e1;
     border-radius: 6px;
+}
 
+.map-controls label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+}
+
+#refreshStatus {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+#damSearch {
+    flex-grow: 1;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
     font-size: 1rem;
 }
 
 #searchButton {
     padding: 10px 18px;
-
     border: none;
     border-radius: 6px;
-
     background: #2563eb;
     color: white;
-
     cursor: pointer;
 }
 
 #searchButton:hover {
     background: #1d4ed8;
-}
-
-.nav-button {
-    background: transparent;
-    border: none;
-
-    color: white;
-
-    padding: 10px 16px;
-
-    border-radius: 6px;
-
-    cursor: pointer;
-
-    font-size: 0.95rem;
-
-    transition: background 0.2s;
 }
 
 .nav-button:hover {
@@ -212,6 +204,7 @@
             padding: 0 20px;
         }
 
+/* NAVIGATION */
         .nav-bar {
             background-color: #2c3e50;
             padding: 10px 30px;
@@ -240,8 +233,15 @@
             opacity: 0.55;
             cursor: default;
         }
+/*PREVENTS TABS FROM ALL OPENING AT ONCE*/
+.tab-panel {
+    display: none;
+}
 
-        #map { flex-grow: 1; width: 100%; }
+.tab-panel.active {
+    display: block;
+}
+        
         .info.legend { padding: 12px; font: 14px Arial, Helvetica, sans-serif; background: rgba(255,255,255,0.9); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; line-height: 24px; }
         .legend i { width: 12px; height: 12px; float: left; margin-right: 8px; margin-top: 6px; border-radius: 50%; border: 1px solid #777; }
         .filter-section { border-top: 1px solid #ccc; margin-top: 8px; padding-top: 8px; }
@@ -278,4 +278,4 @@
         }
         .disclaimer-agree-btn:hover { background: #2980b9; }
 
-    </style>
+
