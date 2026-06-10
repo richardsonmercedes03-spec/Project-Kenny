@@ -77,11 +77,6 @@
             aria-controls="tab-education">
         Educational Resources
     </button>
-
-    <button class="nav-button active"
-            data-tab="forecasts">
-        Forecasts
-    </button>
     
     <button class="nav-button"
             data-tab="submit">
@@ -109,8 +104,60 @@
 <div class="tab-content-area">
     
 <div id="tab-forecasts" class="tab-panel active">
+
+    <!-- Map Controls -->
+    <div class="map-controls">
+
+        <!-- Dam Search -->
+        <input
+            type="text"
+            id="damSearch"
+            placeholder="Search for a dam">
+
+        <button id="searchButton">
+            Search
+        </button>
+
+        <!-- Geolocation -->
+        <button id="geoLocateBtn">
+            Locate Me
+        </button>
+
+        <!-- Watershed Filter -->
+        <select id="watershedSelect">
+            <option value="">
+                All Watersheds
+            </option>
+        </select>
+
+        <!-- Layer Toggles -->
+        <label>
+            <input
+                type="checkbox"
+                id="toggleDams"
+                checked>
+            Dams
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                id="toggleStreams"
+                checked>
+            Streams
+        </label>
+
+        <!-- Data Refresh Status -->
+        <div id="refreshStatus">
+            Last Updated: --
+        </div>
+
+    </div>
+
+    <!-- Map -->
     <div id="map"></div>
-    </div>   
+
+</div>  
     
 <div id="tab-about" class="tab-panel">
     <div class="info-page">
@@ -132,6 +179,7 @@
         class="embedded-frame"
         src="cfd-toolbox/index.html"
         loading="lazy">
+        title="CFD Toolbox">
     </iframe>
 
 </div>
