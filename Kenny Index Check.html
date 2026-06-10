@@ -22,9 +22,6 @@
 </head>   
 
 <body>
-    <div id="tab-forecasts" class="tab-panel active">
-    <div id="map"></div>
-    </div>
 
 <!--JS libraries-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
@@ -75,6 +72,11 @@
         Educational Resources
     </button>
 
+    <button class="nav-button active"
+            data-tab="forecasts">
+        Forecasts
+    </button>
+    
     <button class="nav-button"
             data-tab="submit">
         Submit a Site
@@ -99,6 +101,10 @@
     
 <!--matching tab -->
 <div class="tab-content-area">
+    
+<div id="tab-forecasts" class="tab-panel active">
+    <div id="map"></div>
+    </div>   
     
 <div id="tab-about" class="tab-panel">
     <div class="info-page">
@@ -137,7 +143,6 @@
         <p>Submission form or instructions go here.</p>
     </div>
 </div>    
-</div>
 </div>
     
     <div id="forecastModal" class="modal">
