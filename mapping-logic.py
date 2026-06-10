@@ -26,7 +26,11 @@ let selectedDam = null;
 function getDamName(props) {
 
     return (
-        getDamName(props)
+        props.name ||
+        props.Name ||
+        props.DAM_NAME ||
+        props.Dam_Name ||
+        "Unnamed Dam"
     );
 
 }
@@ -181,8 +185,6 @@ async function loadForecastForDam(feature) {
             );
 
         }
-
-        const gaugeData = await gaugeResponse.json();
 
         //-- Modal Elements --//
 
