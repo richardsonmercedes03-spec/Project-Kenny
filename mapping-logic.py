@@ -52,25 +52,19 @@ function getHazardColor(h) {
 //-- 5. Filters --//
 
 function getSelectedHazards() {
-
     return Array.from(
         document.querySelectorAll('.filter-box input:checked')
     ).map(cb => cb.value);
 }
 
-
 //-- 6. Forecast --//
 
 function parseForecastData(data) {
-
     let times = [];
     let flows = [];
-
     // FORMAT 1
     // { times: [], flows: [] }
-
     if (data.times && data.flows) {
-
         times = data.times;
         flows = data.flows;
     }
@@ -79,11 +73,9 @@ function parseForecastData(data) {
     // NOAA timeSeries format
 
     else if (data.forecast && data.forecast.timeSeries) {
-
         times = data.forecast.timeSeries.map(
             d => d.validTime || d.time
         );
-
         flows = data.forecast.timeSeries.map(
             d => d.value || d.flow
         );
@@ -93,11 +85,9 @@ function parseForecastData(data) {
     // Generic array
 
     else if (Array.isArray(data)) {
-
         times = data.map(
             d => d.time || d.validTime || d.datetime
         );
-
         flows = data.map(
             d => d.flow || d.value || d.discharge
         );
@@ -107,16 +97,13 @@ function parseForecastData(data) {
     // Nested hydrograph object
 
     else if (data.hydrograph?.series) {
-
         times = data.hydrograph.series.map(
             d => d.time
         );
-
         flows = data.hydrograph.series.map(
             d => d.flow
         );
     }
-
     return {
         times,
         flows
@@ -124,28 +111,21 @@ function parseForecastData(data) {
 }
 
 async function loadForecastForDam(feature) {
-
     const props = feature.properties;
-
     const comid =
         props.COMID ||
         props.comid ||
         props.Comid;
-
     if (!comid) {
-
         console.error(
             "Missing COMID:",
             feature
         );
-
         alert(
             "No COMID available for this dam."
         );
-
         return;
     }
-
     try {
 
         //-- Flask Forecast --//
