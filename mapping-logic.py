@@ -203,20 +203,13 @@ async function loadForecastForDam(feature) {
         const ctx =
             document.getElementById('forecastChart')
             .getContext('2d');
-
         if (window.forecastChart) {
-
             window.forecastChart.destroy();
         }
-
         window.forecastChart = new Chart(ctx, {
-
             type: 'line',
-
             data: {
-
                 labels: times,
-
                 datasets: [{
                     label: 'NWM Forecast Flow (cfs)',
                     data: flows,
@@ -226,22 +219,17 @@ async function loadForecastForDam(feature) {
             },
 
             options: {
-
                 responsive: true,
-
                 interaction: {
                     mode: 'index',
                     intersect: false
                 },
-
                 scales: {
-
                     x: {
                         ticks: {
                             maxTicksLimit: 8
                         }
                     },
-
                     y: {
                         title: {
                             display: true,
@@ -254,13 +242,10 @@ async function loadForecastForDam(feature) {
 
     }
     catch(err) {
-
         console.error("Forecast Error:", err);
-
         alert("Failed to load forecast.");
     }
 }
-
 
 //-- 7. Render dams --//
 
@@ -300,13 +285,9 @@ function renderDams() {
         );
 
         marker.on('click', () => {
-
             selectedDam = feature;
-
             loadForecastForDam(feature);
-
             openAnalyticsSidebar(feature);
-
         });
 
         damCluster.addLayer(marker);
@@ -326,7 +307,6 @@ function openAnalyticsSidebar(feature) {
         );
 
     sidebar.classList.add('open');
-
     document.getElementById(
         'selectedDamName'
     ).textContent =
@@ -411,45 +391,37 @@ fetch('dams.gpkg')
     })
 
     .catch(err => {
-
         console.error(
             "GeoPackage Load Error:",
             err
         );
-
     });
 
 
 //-- 9. Load NWM --//
 
 function parseGauge(site) {
-
     return {
-
         name:
             site.name ||
             site.gaugeName ||
             site.stationName ||
             "Unknown Gauge",
-
         latitude:
             site.latitude ||
             site.lat ||
             site.location?.latitude,
-
         longitude:
             site.longitude ||
             site.lon ||
             site.lng ||
             site.location?.longitude,
-
         flow:
             site.flow ||
             site.discharge ||
             site.streamflow ||
             site.value ||
             "N/A",
-
         status:
             site.status ||
             site.condition ||
@@ -462,31 +434,24 @@ function loadNWM() {
     fetch(
         "https://api.water.noaa.gov/nwps/v1/gauges"
     )
-
     .then(r => r.json())
-
     .then(data => {
-        
         document.getElementById(
             'refreshStatus'
         ).textContent =
             'Last updated: ' +
             new Date().toLocaleTimeString();
         console.log(data);
-
         nwmCluster.clearLayers();
 
         //-- NOAA may return items[] --//
 
         const gauges =
             data.items || data.features || data;
-
         if (!Array.isArray(gauges)) {
-
             console.error(
                 "NWM response is not an array"
             );
-
             return;
         }
 
@@ -521,9 +486,7 @@ function loadNWM() {
             );
 
             nwmCluster.addLayer(marker);
-
         });
-
     })
 
     .catch(err => {
@@ -532,7 +495,6 @@ function loadNWM() {
             "NWM Load Error:",
             err
         );
-
     });
 }
 
@@ -573,6 +535,14 @@ document.getElementById(
 
             marker.openTooltip();
 
+        const props =
+            marker.featureData.properties;
+
+        const searchText = `
+        ${props.name || ''}
+        ${props.river || ''}
+        ${props.county || ''}
+        `.toLowerCase();
         }
 
     });
