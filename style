@@ -5,6 +5,19 @@
         
         /* UPDATED: Increased padding for a taller header */
         /* HEADER */
+.header-container {
+    background-color: white;
+    padding: 20px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    position: relative;
+    z-index: 1000;
+}
 
 .header-left,
 .header-right {
