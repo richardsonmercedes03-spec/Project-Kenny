@@ -38,16 +38,11 @@ function getDamName(props) {
 //-- 4. Styling --//
 
 function getHazardColor(h) {
-
     if (h === "High") return "red";
-
     if (h === "Significant") return "orange";
-
     if (h === "Low") return "green";
-
     return "gray";
 }
-
 
 //-- 5. Filters --//
 
@@ -144,26 +139,20 @@ async function loadForecastForDam(feature) {
         let gaugeData = {};
 
         try {
-
             const gaugeResponse =
                 await fetch(
                     `https://api.water.noaa.gov/nwps/v1/gauges/${comid}`
                 );
-
             if (gaugeResponse.ok) {
-
                 gaugeData =
                     await gaugeResponse.json();
             }
-
         }
         catch(err) {
-
             console.warn(
                 "Gauge lookup failed",
                 err
             );
-
         }
 
         //-- Modal Elements --//
