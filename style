@@ -58,8 +58,9 @@
 /* REFRESH STATUS */
 #refreshStatus {
     margin-top: 6px;
-    font-size: 0.8rem;
-    color: #93c5fd;
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: #64748b;
 }
 
 /* CLOCK */
@@ -161,12 +162,6 @@
     font-size: 0.9rem;
 }
 
-#refreshStatus {
-    margin-left: auto;
-    font-size: 0.85rem;
-    color: #64748b;
-}
-
 #damSearch {
     flex-grow: 1;
     padding: 10px 14px;
@@ -198,7 +193,7 @@
 
 /* MAP */
 #map {
-    height: calc(100vh - 190px);
+    height: calc(100vh - 260px);
 }
         
         .logo-group { display: flex; gap: 15px; align-items: center; }
