@@ -52,6 +52,10 @@ from pathlib import Path
 
 _print_lock = threading.Lock()
 
+##This code will eventually summon flask/fast API
+@app.route("/api/nwm_forecast/<comid>")
+def nwm_forecast(comid):
+
 #@@ -376,9 +376,15 @@ def main() -> None:
 raw_dem_dir.mkdir(parents=True, exist_ok=True)
 
