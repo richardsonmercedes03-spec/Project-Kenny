@@ -388,6 +388,36 @@ fetch('dams.gpkg')
         );
 
         renderDams();
+
+        const watersheds = new Set();
+
+        allDamFeatures.forEach(feature => {
+
+            const ws =
+                feature.properties.watershed;
+
+            if (ws) {
+                watersheds.add(ws);
+            }
+
+        });
+
+        const select =
+            document.getElementById(
+                'watershedSelect'
+            );
+
+        watersheds.forEach(ws => {
+
+            const option =
+                document.createElement('option');
+
+            option.value = ws;
+            option.textContent = ws;
+
+            select.appendChild(option);
+
+         });
     })
 
     .catch(err => {
