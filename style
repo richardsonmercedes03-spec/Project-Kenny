@@ -96,7 +96,7 @@
 .analytics-sidebar {
     position: fixed;
     top: 200px;
-    right: 0;
+    right: -340px;
     width: 320px;
     max-height: calc(100vh - 220px);
     overflow-y: auto;
@@ -104,6 +104,11 @@
     box-shadow: -2px 0 10px rgba(0,0,0,0.15);
     z-index: 1200;
     padding: 15px;
+    transition: right 0.3s ease;
+}
+
+.analytics-sidebar.open {
+    right: 0;
 }
 
 .sidebar-header {
