@@ -25,7 +25,6 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
-
 #constants
 _BACKEND_ROOT = Path(__file__).resolve().parent
 _REPO_ROOT = _BACKEND_ROOT.parent
