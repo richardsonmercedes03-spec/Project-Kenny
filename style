@@ -250,11 +250,9 @@
 .tab-panel {
     display: none;
 }
-
 .tab-panel.active {
     display: block;
-}
-        
+}       
         .info.legend { padding: 12px; font: 14px Arial, Helvetica, sans-serif; background: rgba(255,255,255,0.9); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; line-height: 24px; }
         .legend i { width: 12px; height: 12px; float: left; margin-right: 8px; margin-top: 6px; border-radius: 50%; border: 1px solid #777; }
         .filter-section { border-top: 1px solid #ccc; margin-top: 8px; padding-top: 8px; }
