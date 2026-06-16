@@ -361,7 +361,7 @@ function openAnalyticsSidebar(feature) {
 
 //-- 8. Load GeoPackage --//
 
-fetch('dams.gpkg')
+fetch('data/dams.gpkg')
 
     .then(r => r.arrayBuffer())
 
