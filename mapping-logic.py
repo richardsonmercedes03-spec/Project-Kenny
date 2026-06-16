@@ -552,11 +552,16 @@ document.getElementById(
 
         if (!tooltip) return;
 
-        const name =
-            tooltip.getContent()
-            .toLowerCase();
+        const props =
+            marker.featureData.properties;
 
-        if (name.includes(query)) {
+        const searchText = `
+        ${props.name || ''}
+        ${props.river || ''}
+        ${props.county || ''}
+        `.toLowerCase();
+
+        if (searchText.includes(query)) {
 
             map.setView(
                 marker.getLatLng(),
