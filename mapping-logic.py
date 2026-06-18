@@ -428,6 +428,103 @@ fetch('data/dams.gpkg')
         );
     });
 
+//--Flow Color--//
+
+function getFlowColor(flow)
+function updateStreamColors(
+    forecastMultiplier = 1
+) {
+
+    streamMarkers.forEach(marker => {
+
+        const adjustedFlow =
+            marker.forecastFlow *
+            forecastMultiplier;
+
+        marker.setStyle({
+
+            fillColor:
+                getFlowColor(
+                    adjustedFlow
+                ),
+
+            radius:
+                Math.max(
+                    4,
+                    Math.min(
+                        12,
+                        Math.log10(
+                            adjustedFlow + 1
+                        ) * 3
+                    )
+                )
+
+        });
+
+    });
+
+}
+
+//--Forecast Slider--//
+
+document.getElementById(
+    'forecastSlider'
+)
+
+.addEventListener(
+    'input',
+    function(e) {
+
+        const idx =
+            Number(
+                e.target.value
+            );
+
+        currentForecastIndex =
+            idx;
+
+        document.getElementById(
+            'forecastHour'
+        ).textContent =
+            idx;
+
+        if (
+            !window.currentForecast
+        ) return;
+
+        const flow =
+            window.currentForecast
+            .flows[idx];
+
+        const time =
+            window.currentForecast
+            .times[idx];
+
+        document.getElementById(
+            'nwmInfo'
+        ).innerHTML = `
+            <strong>Selected Time:</strong>
+            ${time}<br>
+
+            <strong>Flow:</strong>
+            ${flow} cfs
+        `;
+
+        const maxFlow =
+            Math.max(
+                ...window.currentForecast
+                .flows
+            );
+
+        const multiplier =
+            flow / maxFlow;
+
+        updateStreamColors(
+            multiplier
+        );
+
+    }
+);
 
 //-- 9. Load NWM --//
 
@@ -519,6 +616,8 @@ function loadNWM() {
             marker.forecastFlow =
                 Number(parsed.flow) || 0;
             streamMarkers.push(marker);
+
+            updateStreamColors(1);
         });
     })
 
