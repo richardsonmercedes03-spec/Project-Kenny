@@ -1,6 +1,7 @@
 //-- 1. Map initialization --//
 
 const map = L.map('map').setView([39.5, -98.5], 4);
+const streamForecasts = {};
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -571,6 +572,18 @@ function loadNWM() {
             new Date().toLocaleTimeString();
         console.log(data);
         nwmCluster.clearLayers();
+
+    streamForecasts[
+        parsed.comid
+    ] = {
+
+        times:
+            parsed.times,
+
+        flows:
+            parsed.flows
+
+    };
 
         //-- NOAA may return items[] --//
 
