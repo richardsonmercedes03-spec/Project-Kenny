@@ -783,6 +783,81 @@ document.getElementById(
 
 });
 
+//--Flow Animation
+
+    let animationTimer = null;
+
+document.getElementById(
+    'playForecast'
+)
+
+.addEventListener(
+    'click',
+    function() {
+
+        const slider =
+            document.getElementById(
+                'forecastSlider'
+            );
+
+        if (animationTimer) {
+
+            clearInterval(
+                animationTimer
+            );
+
+            animationTimer =
+                null;
+
+            this.textContent =
+                '▶ Play Forecast';
+
+            return;
+        }
+
+        this.textContent =
+            '⏸ Pause';
+
+        animationTimer =
+            setInterval(
+                () => {
+
+                    let value =
+                        Number(
+                            slider.value
+                        );
+
+                    value++;
+
+                    if (
+                        value >
+                        Number(
+                            slider.max
+                        )
+                    ) {
+
+                        value = 0;
+
+                    }
+
+                    slider.value =
+                        value;
+
+                    slider.dispatchEvent(
+                        new Event(
+                            'input'
+                        )
+                    );
+
+                },
+
+                1000
+
+            );
+
+    }
+);
+
 //-- Layer Toggles --//
 
 document.getElementById(
