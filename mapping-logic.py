@@ -22,7 +22,8 @@ let allDamFeatures = [];
 let allMarkers = [];
 let watershedLayer = L.layerGroup();
 let selectedDam = null;
-
+let streamMarkers = [];
+let currentForecastIndex = 0;
 function getDamName(props) {
 
     return (
@@ -514,8 +515,10 @@ function loadNWM() {
                     sticky: true
                 }
             );
-
             nwmCluster.addLayer(marker);
+            marker.forecastFlow =
+                Number(parsed.flow) || 0;
+            streamMarkers.push(marker);
         });
     })
 
