@@ -55,6 +55,18 @@
     align-items: center;
 }
 
+/*MOBILE LOGOS*/
+@media (
+    max-width: 768px
+) {
+    .header-logo {
+        height: 40px;
+    }
+    .header-container h1 {
+        font-size: 1rem;
+    }
+}
+
 /* REFRESH STATUS */
 #refreshStatus {
     margin-top: 6px;
@@ -79,17 +91,33 @@
     font-weight: bold;
     color: white;
 }
-
 .status-low {
     background: #16a34a;
 }
-
 .status-significant {
     background: #f59e0b;
 }
-
 .status-high {
     background: #dc2626;
+}
+
+/*MOBILE SIDEBAR*/
+@media (
+    max-width: 768px
+) {
+    .analytics-sidebar {
+        width: 100%;
+        max-height: 45vh;
+        top: auto;
+        bottom: 0;
+        right: 0;
+        transform:
+            translateY(100%);
+    }
+    .analytics-sidebar.open {
+        transform:
+            translateY(0);
+    }
 }
 
 /*SIDEBAR STYLING*/
@@ -167,6 +195,18 @@
     font-size: 0.9rem;
 }
 
+/*MOBILE MAP CONTROLS*/
+@media (
+    max-width: 768px
+) {
+    .map-controls {
+        flex-direction:
+            column;
+        align-items:
+            stretch;
+    }
+}
+
 #damSearch {
     flex-grow: 1;
     padding: 10px 14px;
@@ -188,12 +228,44 @@
     background: #1d4ed8;
 }
 
+/*MOBILE SEARCH BUTTON*/
+@media (
+    max-width: 768px
+) {
+    #damSearch,
+    #searchButton,
+    #geoLocateBtn,
+    #watershedSelect {
+        width: 100%;
+    }
+}
+
 .nav-button:hover {
     background: rgba(255,255,255,0.12);
 }
 
 .nav-button.active {
     background: #2563eb;
+}
+
+/*MOBILE BUTTONS*/
+@media (
+    max-width: 768px
+) {
+    .nav-bar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+}
+
+/*MOBILE FORECAST MODAL*/
+@media (
+    max-width: 768px
+) {
+    .modal-content {
+        width: 95%;
+        margin: 20px auto;
+    }
 }
 
 /* MAP */
@@ -246,6 +318,12 @@
             opacity: 0.55;
             cursor: default;
         }
+
+/*MOBILE-FRIENDLY SLIDER*/
+#forecastSlider {
+    height: 40px;
+}
+
 /*PREVENTS TABS FROM ALL OPENING AT ONCE*/
 .tab-panel {
     display: none;
