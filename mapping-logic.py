@@ -434,9 +434,44 @@ fetch('data/dams.gpkg')
 //--Flow Color--//
 
 function getFlowColor(flow)
-function updateStreamColors(
-    forecastMultiplier = 1
+updateStreamsAtHour(
+    idx
+);
+
+function updateStreamsAtHour(
+    forecastHour
 ) {
+    streamMarkers.forEach(
+        marker => {
+            const forecast =
+                streamForecasts[
+                    marker.comid
+                ];
+            if (!forecast)
+                return;
+            const flow =
+                forecast.flows[
+                    forecastHour
+                ];
+            marker.setStyle({
+                fillColor:
+                    getFlowColor(
+                        flow
+                    ),
+                radius:
+                    Math.max(
+                        4,
+                        Math.min(
+                            12,
+                            Math.log10(
+                                flow + 1
+                            ) * 3
+                        )
+                    )
+            });
+        }
+    );
+}
 
     streamMarkers.forEach(marker => {
 
