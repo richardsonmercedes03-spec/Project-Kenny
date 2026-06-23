@@ -277,6 +277,8 @@ function renderDams() {
                 color: "#fff",
                 weight: 1,
                 fillOpacity: 0.8
+                marker.comid =
+                parsed.comid;
             }
         );
 
