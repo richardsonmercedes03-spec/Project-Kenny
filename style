@@ -324,11 +324,6 @@
     height: 40px;
 }
 
-/*MOBILE FLOATING BUTTON INSTEAD OF RIGHT SIDEBAR*/
-<button id="analyticsToggle">
-    Dam Info
-</button>
-
 /*PREVENTS TABS FROM ALL OPENING AT ONCE*/
 .tab-panel {
     display: none;
