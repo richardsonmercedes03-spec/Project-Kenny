@@ -136,6 +136,20 @@ async function loadForecastForDam(feature) {
         const times = parsedForecast.times;
         const flows = parsedForecast.flows;
 
+//--ANALYTICS TOGGLE--//
+        const analyticsToggle =
+            document.getElementById("analyticsToggle");
+
+        if (analyticsToggle) {
+
+           analyticsToggle.addEventListener("click", () => {
+
+                document
+                    .getElementById("analyticsSidebar")
+                    .classList.toggle("open");
+            });
+        }
+
         //-- NOAA Gauge Info --//
 
         let gaugeData = {};
