@@ -138,34 +138,6 @@
     }
 }
 
-/*SIDEBAR STYLING*/
-.analytics-sidebar {
-    position: fixed;
-    top: 200px;
-    right: -340px;
-    width: 320px;
-    max-height: calc(100vh - 220px);
-    overflow-y: auto;
-    background: white;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.15);
-    z-index: 1200;
-    padding: 15px;
-    transition: right 0.3s ease;
-}
-
-.analytics-sidebar.open {
-    right: 0;
-}
-
-.sidebar-header {
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
-}
-
-.analytics-section {
-    margin-top: 15px;
-}
-
 /* SEARCH BAR */
 .search-container {
     display: flex;
