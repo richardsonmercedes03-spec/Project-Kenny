@@ -35,7 +35,7 @@ DEFAULT_DAMS_CSV = _REPO_ROOT / "frontend" / "data" / "full_lhd_website.csv"
 # NHD reach window: 100 m upstream, 1 km downstream
 _FLOWLINE_DISTANCE_KM = (0.1, 1.0)
 # NHD reach window: 1 km upstream, 1.5 km downstream
-_FLOWLINE_DISTANCE_KM = (1.0, 1.5)
+#_FLOWLINE_DISTANCE_KM = (1.0, 1.5)
 
 import threading
 import pandas as pd
