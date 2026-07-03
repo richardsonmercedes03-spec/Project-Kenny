@@ -42,7 +42,6 @@ import pandas as pd
 import requests
 import geopandas as gpd
 import argparse
-from shapely.geometry import Point, box
 from shapely.geometry import Point
 from pathlib import Path
 
