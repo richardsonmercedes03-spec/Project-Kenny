@@ -30,8 +30,6 @@ _BACKEND_ROOT = Path(__file__).resolve().parent
 _REPO_ROOT = _BACKEND_ROOT.parent
 raw_dem_dir = 
 ## must be defined manually. fetch_nhd_flowlines = 
-
-_REPO_ROOT = _BACKEND_ROOT.parent
 DEFAULT_DAMS_CSV = _REPO_ROOT / "frontend" / "data" / "full_lhd_website.csv"
 
 # NHD reach window: 100 m upstream, 1 km downstream
