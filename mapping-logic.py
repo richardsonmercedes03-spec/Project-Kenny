@@ -694,7 +694,18 @@ function loadNWM() {
     });
 }
 
-//-- Initial Load --//
+//-- OPEN AND CLOSE SIDEBAR --//
+const sidebar = document.getElementById("analyticsSidebar");
+
+document.getElementById("analyticsToggle")
+.addEventListener("click", () => {
+    sidebar.classList.add("open");
+});
+
+document.getElementById("closeSidebar")
+.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+});
 
 //-- Dam Search --//
 
