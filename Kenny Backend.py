@@ -48,6 +48,37 @@ from flask import flask
 
 _print_lock = threading.Lock()
 
+------------------------
+#--Query NWM Forecast--#
+------------------------
+NWM_ENDPOINT = (
+    "https://api.water.noaa.gov/nwps/v1/reaches/{comid}/forecast"
+)
+
+def query_nwm(comid):
+
+    url = NWM_ENDPOINT.format(comid=comid)
+
+    response = requests.get(url, timeout=20)
+
+    response.raise_for_status()
+
+    data = response.json()
+
+    forecasts = []
+
+    for item in data["forecast"]:
+
+        forecasts.append({
+
+            "time": item["validTime"],
+
+            "flow": item["discharge"]
+
+        })
+
+    return forecasts
+
 ##This code will eventually summon flask/fast API
 @app.route(
     "/api/nwm_forecast/<int:comid>"
