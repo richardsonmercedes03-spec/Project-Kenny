@@ -2,6 +2,7 @@
 
 const map = L.map('map').setView([39.5, -98.5], 4);
 const streamForecasts = {};
+const forecastCache = new Map();
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -519,64 +520,30 @@ function updateStreamsAtHour(
 
 //--Forecast Slider--//
 
-document.getElementById(
-    'forecastSlider'
-)
+forecastSlider.addEventListener("input", e => {
 
-.addEventListener(
-    'input',
-    function(e) {
+    const hour =
+        Number(e.target.value);
 
-        const idx =
-            Number(
-                e.target.value
-            );
+    streamLayer.eachLayer(layer => {
 
-        currentForecastIndex =
-            idx;
+        const forecast =
+            layer.feature.properties.forecast;
 
-        document.getElementById(
-            'forecastHour'
-        ).textContent =
-            idx;
-
-        if (
-            !window.currentForecast
-        ) return;
+        if (!forecast) return;
 
         const flow =
-            window.currentForecast
-            .flows[idx];
+            forecast[hour].flow;
 
-        const time =
-            window.currentForecast
-            .times[idx];
+        layer.setStyle({
 
-        document.getElementById(
-            'nwmInfo'
-        ).innerHTML = `
-            <strong>Selected Time:</strong>
-            ${time}<br>
+            color: getStreamColor(flow)
 
-            <strong>Flow:</strong>
-            ${flow} cfs
-        `;
+        });
 
-        const maxFlow =
-            Math.max(
-                ...window.currentForecast
-                .flows
-            );
+    });
 
-        const multiplier =
-            flow / maxFlow;
-
-        updateStreamColors(
-            multiplier
-        );
-
-    }
-);
+});
 
 //-- 9. Load NWM --//
 
@@ -611,30 +578,32 @@ function parseGauge(site) {
 
 function loadNWM() {
 
-    fetch(
-        "https://api.water.noaa.gov/nwps/v1/gauges"
-    )
-    .then(r => r.json())
-    .then(data => {
-        document.getElementById(
-            'refreshStatus'
-        ).textContent =
-            'Last updated: ' +
-            new Date().toLocaleTimeString();
-        console.log(data);
-        nwmCluster.clearLayers();
+    //--WHEN EACH STREAM LOADS REMOVES EXTRA API CALL--//
+    async function loadForecast(streamLayer) {
 
-    streamForecasts[
-        parsed.comid
-    ] = {
+    const comid = streamLayer.feature.properties.COMID;
 
-        times:
-            parsed.times,
+    // Already downloaded?
+    if (forecastCache.has(comid)) {
 
-        flows:
-            parsed.flows
+        streamLayer.feature.properties.forecast =
+            forecastCache.get(comid);
 
-    };
+        return;
+    }
+
+    const response =
+        await fetch(`/api/nwm_forecast/${comid}`);
+
+    const forecast =
+        await response.json();
+
+    forecastCache.set(comid, forecast);
+
+//--MAKES EACH STREAM HAS feature.properties.forecast --//
+    streamLayer.eachLayer(layer => {
+    loadForecast(layer);
+    });
 
         //-- NOAA may return items[] --//
 
@@ -858,7 +827,7 @@ document.getElementById(
 
 });
 
-//--Flow Animation
+//--Flow Animation--//
 
     let animationTimer = null;
 
